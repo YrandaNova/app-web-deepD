@@ -11,8 +11,8 @@ from reportlab.lib.pagesizes import A4
 
 
 #text = input("Enter the watermark text here:")
-text="Gracias te amo"
-pdf_file='Lorem.pdf'
+text="Hola"
+pdf_file='/Lorem.pdf'
 
 def makepdf(pdf_file):
     watermark = 'watermark.pdf'
@@ -48,5 +48,8 @@ def makeWatermark(text):
 
 
 
+
+
 makeWatermark(text)
+#aprender como subir un archivo
 makepdf(pdf_file)

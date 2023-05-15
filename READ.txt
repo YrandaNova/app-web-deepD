@@ -1,1 +1,16 @@
 sadsdf
+
+with open(input_pdf, 'rb') as Archivo:
+    Pdf_Reader=PdfReader(Archivo)
+
+    pdf_writer=PdfWriter()
+
+    for pagina in range(len(Pdf_Reader.pages)):
+        pagina_actual = Pdf_Reader.pages[pagina]
+        marca_de_agua = PdfReader(open('marca_de_agua.pdf', 'rb')).getPage(0)
+        pagina_actual.mergePage(marca_de_agua)
+        pdf_writer.addPage(pagina_actual)
+
+    # Escribir el archivo PDF con la marca de agua agregada
+    with open('archivo_con_marca_de_agua.pdf', 'wb') as archivo_con_marca_de_agua:
+        pdf_writer.write(archivo_con_marca_de_agua)

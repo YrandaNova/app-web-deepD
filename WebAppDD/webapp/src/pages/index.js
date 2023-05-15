@@ -7,14 +7,18 @@ export default function Home() {
 
   const [email, setEmail]=useState("")
   const currentDate = new Date();
+  const [file, setfile]= useState(null)
   
 
   const handleSubmit=(event)=>{
       console.log("email", email, currentDate)
       alert("email", email)
-  }
-  
 
+  }
+
+  const handleFileChange=(event)=>{
+      console.log("tengo el archivo")
+  }  
 
 
 
@@ -29,7 +33,7 @@ export default function Home() {
           </label>
           <div className='my-5 flex '>
             <label></label>
-            <input type='file'accept='pdf' ></input>
+            <input type='file'accept='pdf' onChange={handleFileChange}></input>
           </div>
           <div className='my-7 flex  justify-center'>
 

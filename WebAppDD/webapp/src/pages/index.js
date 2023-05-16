@@ -7,9 +7,16 @@ export default function Home() {
 
   const [email, setEmail]=useState("")
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
-  const [file, setfile]= useState(null)
+  const [file, setFile]= useState("")
   
   
+const formData=new FormData();
+formData.append('email', email);
+formData.append('currentDate', currentDate);
+formData.append('file', file);
+
+
+
 
   const handleSubmit= async (event)=>{
       event.preventDefault();
@@ -17,18 +24,10 @@ export default function Home() {
       try{
         const res = await fetch ("http://localhost:3001/submit-form",{
           method:"POST",
-          headers:{
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({email,currentDate})
-        
+         body: formData
         
   
       });
-
-      const data = await res.json();
-      console.log(data);
-      
 
       }catch (error){
         console.error(error);
@@ -36,6 +35,8 @@ export default function Home() {
   };
 
   const handleFileChange=(event)=>{
+
+      setFile(event.target.files[0]);
 
       console.log("tengo el archivo")
   }  
@@ -53,7 +54,7 @@ export default function Home() {
           </label>
           <div className='my-5 flex '>
             <label></label>
-            <input type='file'accept='pdf' onChange={handleFileChange}></input>
+            <input type='file'accept='pdf'  onChange={handleFileChange}></input>
           </div>
           <div className='my-7 flex  justify-center'>
 

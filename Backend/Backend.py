@@ -8,7 +8,11 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from PyPDF2 import PdfReader, PdfReader, PdfWriter
 
+
+UPLOAD_FOLDER = '/home/yranda/Documents/Deep_dive/Resources/uploadFolder'
+
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 CORS(app) # Enable CORS on server side
@@ -55,11 +59,14 @@ def index():
 
 @app.route('/submit-form', methods=['POST'])
 def submit_form():
-    email = request.json.get('email')
-    date = request.json.get('currentDate')
+    email = request.form['email']
+    date = request.form['currentDate']
+    file = request.files['file']
+    filename=file.filename   
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
+    print(f"Received email {email} at {date} with namefile {filename}")
+    return {'message': 'File uploaded successfully!'}
     
-    print(f"Received email {email} at {date}")
-    return jsonify({"success":True})
 
 
 

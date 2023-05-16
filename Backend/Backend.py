@@ -8,7 +8,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from PyPDF2 import PdfReader, PdfReader, PdfWriter
 
-
+#will change to a folder located in the server
 UPLOAD_FOLDER = '/home/yranda/Documents/Deep_dive/Resources/uploadFolder'
 
 app = Flask(__name__)
@@ -17,12 +17,14 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 CORS(app) # Enable CORS on server side
 
-text="Watermark"
+text="Watermarkflasktest"
+out_path='/home/yranda/Documents/Deep_dive/prueba/Watermarked.pdf'
+
 
 
 def makepdf(pdf_file):
     watermark = 'watermark.pdf'
-    merged = "Watermarked.pdf"
+    merged = out_path
 
     with open(pdf_file, "rb") as input_file, open(watermark, "rb") as watermark_file:
         input_pdf = PdfReader(input_file)
@@ -38,6 +40,8 @@ def makepdf(pdf_file):
 
         with open(merged, "wb") as merged_file:
             output.write(merged_file)
+            
+
 
 
 
@@ -63,9 +67,13 @@ def submit_form():
     date = request.form['currentDate']
     file = request.files['file']
     filename=file.filename   
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
-    print(f"Received email {email} at {date} with namefile {filename}")
-    return {'message': 'File uploaded successfully!'}
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    makeWatermark(text)
+    file_path=os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    makepdf(file_path)
+
+    print(f"Received email {email} at {date} with namefile {filename} {text}")
+    return {'message': 'File uploaded successfully!, text {text}'}
     
 
 

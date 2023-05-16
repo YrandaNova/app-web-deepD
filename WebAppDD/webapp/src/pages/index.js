@@ -6,17 +6,37 @@ import { useState } from 'react';
 export default function Home() {
 
   const [email, setEmail]=useState("")
-  const currentDate = new Date();
+  const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
   const [file, setfile]= useState(null)
   
+  
 
-  const handleSubmit=(event)=>{
-      console.log("email", email, currentDate)
-      alert("email", email)
+  const handleSubmit= async (event)=>{
+      event.preventDefault();
+      
+      try{
+        const res = await fetch ("http://localhost:3001/submit-form",{
+          method:"POST",
+          headers:{
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({email,currentDate})
+        
+        
+  
+      });
 
-  }
+      const data = await res.json();
+      console.log(data);
+      
+
+      }catch (error){
+        console.error(error);
+      }
+  };
 
   const handleFileChange=(event)=>{
+
       console.log("tengo el archivo")
   }  
 

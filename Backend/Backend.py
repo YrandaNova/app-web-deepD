@@ -8,32 +8,27 @@ from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from PyPDF2 import PdfReader, PdfReader, PdfWriter
-from datetime import datetime
 from flask_mail import Mail, Message
+from emailsends import send_email
+from datetime import datetime, timedelta
+from makes_csv import create_csv
+from emailsends import send_Admin
+import schedule
+import time
+
+from timeloop import Timeloop
 
 
 #will change to a folder located in the server
-UPLOAD_FOLDER = '/home/yranda/Documents/Deep_dive/Resources/uploadFolder'
+UPLOAD_FOLDER = 'Resources/uploadFolder'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 CORS(app) # Enable CORS on server side
-
-
-#app.config['MAIL_SERVER'] = 'test4programdd@yahoo.com'  # Dirección del servidor de correo saliente
-
-
-#text="Watermarkflasktest"
-out_path='/home/yranda/Documents/Deep_dive/prueba/Watermarked.pdf'
-
-
-
-
-
-
-
-
+csv_path="prueba/resumen.csv"
+out_path='prueba/Watermarked.pdf'
+tl=Timeloop()
 def makepdf(pdf_file):
     watermark = 'watermark.pdf'
     merged = out_path
@@ -70,18 +65,22 @@ def makeWatermark(text):
 
 
 
-
-
-
 # Index route and most basic example
 @app.route('/', methods=['GET'])
 def index():
     return jsonify({"Status": "Online!"})
 
+@tl.job(interval=timedelta(hours=24))
+def Admin():
+    print("csv send")
+    send_Admin()
+
+
 @app.route('/submit-form', methods=['POST'])
 def submit_form():
     email = request.form['email']
-    date = request.form['currentDate']
+    date_time = datetime.now()
+    date = date_time.strftime("%Y-%m-%d %H:%M:%S")
     file = request.files['file']
     logo=request.form['logo']
     time = datetime.now()
@@ -91,10 +90,11 @@ def submit_form():
     makeWatermark(logo)
     file_path=os.path.join(app.config['UPLOAD_FOLDER'], filename)
     makepdf(file_path)
-
-    enviar_pdf(email,file_path)
-
-    print(f"Received email {email} at {date} with namefile {filename}  at {time}")
+    print(date)
+    marked_pdf='prueba/Watermarked.pdf'
+    print(f"Received email {email} at {date} with namefile {filename}  at {date}")
+    send_email(email,marked_pdf)
+    create_csv(csv_path,date,email)
     return {'message': 'File uploaded successfully! '}
     
 
@@ -104,6 +104,8 @@ def submit_form():
 if __name__ == '__main__':
     from waitress import serve
     # This line is to debug requests made to the server on development
+    tl.start()
     app.run(use_reloader=True, port=3001, threaded=True)
+   
     # This is to run the server on deployment and get full performance
     #serve(app, host="0.0.0.0", port=3000, url_scheme='https')

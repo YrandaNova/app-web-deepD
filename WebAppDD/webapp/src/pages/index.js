@@ -6,14 +6,14 @@ import { useState } from 'react';
 export default function Home() {
 
   const [email, setEmail]=useState("")
-  const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
+ // const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
   const [file, setFile]= useState("")
   const[logo, setLogo]=useState("")
   
   
 const formData=new FormData();
 formData.append('email', email);
-formData.append('currentDate', currentDate);
+//formData.append('currentDate', currentDate);
 formData.append('file', file);
 formData.append('logo', logo)
 
@@ -23,15 +23,18 @@ formData.append('logo', logo)
   const handleSubmit= async (event)=>{
       event.preventDefault();
       
+      
       try{
+        alert("file sent")
         const res = await fetch ("http://localhost:3001/submit-form",{
-          method:"POST",
+        method:"POST",
          body: formData
         
   
       });
 
       }catch (error){
+        alert("error")
         console.error(error);
       }
   };

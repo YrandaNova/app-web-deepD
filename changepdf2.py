@@ -14,6 +14,30 @@ from reportlab.lib.pagesizes import A4
 text="Holaprueba"
 pdf_file='/home/yranda/Documents/Deep_dive/Lorem.pdf'
 caminito='/home/yranda/Documents/Deep_dive/prueba'
+
+port = 465  # For SSL
+smtp_server = "smtp.gmail.com"
+sender_email = "feisbukar@gmail.com"  # Enter your address
+receiver_email = "feisbukar2@gmail.com"  # Enter receiver address
+
+def sendMailNoti():
+   
+    body = ""
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        msg = """\
+        Resumen
+
+        Se presenta el resumen de las siguientes ordenes:\n"""
+        msg += body
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, msg)
+        return "Mail sent"
+
+
+
+
+
 def makepdf(pdf_file,outputpath):
     watermark = 'watermark.pdf'
     merged = '/home/yranda/Documents/Deep_dive/prueba/Watermarked.pdf'

@@ -8,6 +8,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
+import smtplib, ssl
 
 
 #text = input("Enter the watermark text here:")

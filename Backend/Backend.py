@@ -19,24 +19,13 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 CORS(app) # Enable CORS on server side
-mail = Mail(app)
+
 
 #app.config['MAIL_SERVER'] = 'test4programdd@yahoo.com'  # Dirección del servidor de correo saliente
-app.config['MAIL_USE_SSL'] = True  # Utilizar SSL/TLS
-app.config['MAIL_USERNAME'] = 'test4programdd@yahoo.com'  # Correo electrónico del remitente
-app.config['MAIL_PASSWORD'] = 'test4programDD**'  # Contraseña del remitente
-
 
 
 #text="Watermarkflasktest"
 out_path='/home/yranda/Documents/Deep_dive/prueba/Watermarked.pdf'
-#test4programdd@yahoo.com='var'
-
-def enviar_pdf(email, archivo):
-    msg= Message('tu pdf', recipients=[email])
-    msg.attach(archivo.filename, 'application/pdf', archivo.read())
-    mail.send(msg)
-    return 'correo Enviado exitosamente'
 
 
 

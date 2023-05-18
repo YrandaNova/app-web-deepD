@@ -20,7 +20,7 @@ from timeloop import Timeloop
 
 
 #will change to a folder located in the server
-UPLOAD_FOLDER = os.path.abspath('Backend/uploadfolder')
+UPLOAD_FOLDER = '/root/app-web-deepD/Backend/uploadfolder'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -86,9 +86,9 @@ def submit_form():
     time = datetime.now()
   
     filename=file.filename   
-    file.save(os.path.join('Backend','uploadfolder', filename))
+    file.save(os.path.join(UPLOAD_FOLDER, filename))
     makeWatermark(logo)
-    file_path=os.path.join('Backend','uploadfolder', filename)
+    file_path=os.path.join(UPLOAD_FOLDER, filename)
     makepdf(file_path)
     print(date)
     marked_pdf='prueba/Watermarked.pdf'

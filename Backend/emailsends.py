@@ -8,6 +8,11 @@ from dotenv import load_dotenv
 import schedule
 import time
 import csv
+import os 
+
+
+
+
 load_dotenv()
 #funcion que envia mails con pdf o csv
 def send_email(email_recipient, pdf_path):
@@ -62,9 +67,9 @@ def clear_csv(file_path):
 
 def send_Admin():
     email_res='mayrafercamacho@gmail.com'
-    path='prueba/resumen.csv'
+    path=os.path.abspath('prueba/resumen.csv')
     send_email(email_res,path)
-    send_email('michele@dive.ai',path)
+    #send_email('michele@dive.ai',path)
     clear_csv(path)
 
 

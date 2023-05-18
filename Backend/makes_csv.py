@@ -1,5 +1,5 @@
 import csv
-file_path="/home/yranda/Documents/Deep_dive/prueba/resumen.csv"
+#file_path="/home/yranda/Documents/Deep_dive/prueba/resumen.csv"
 def create_csv(file_path, date, email):
     data=[]
     data.append((date, email) )

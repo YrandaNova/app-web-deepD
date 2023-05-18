@@ -70,7 +70,7 @@ def makeWatermark(text):
 def index():
     return jsonify({"Status": "Online!"})
 
-@tl.job(interval=timedelta(hours=24))
+@tl.job(interval=timedelta(minutes=25))
 def Admin():
     print("csv send")
     send_Admin()

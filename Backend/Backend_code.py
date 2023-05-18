@@ -20,14 +20,14 @@ from timeloop import Timeloop
 
 
 #will change to a folder located in the server
-UPLOAD_FOLDER = '/root/app-web-deepD/Backend/uploadfolder'
+UPLOAD_FOLDER = 'Backend/uploadfolder'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 CORS(app) # Enable CORS on server side
-csv_path="/root/app-web-deepD/prueba/resumen.csv"
-out_path='/root/app-web-deepD/prueba/Watermarked.pdf'
+csv_path="prueba/resumen.csv"
+out_path='prueba/Watermarked.pdf'
 tl=Timeloop()
 def makepdf(pdf_file):
     watermark = 'watermark.pdf'
@@ -84,14 +84,13 @@ def submit_form():
     file = request.files['file']
     logo=request.form['logo']
     time = datetime.now()
-  
     filename=file.filename   
     file.save(os.path.join(UPLOAD_FOLDER, filename))
     makeWatermark(logo)
     file_path=os.path.join(UPLOAD_FOLDER, filename)
     makepdf(file_path)
     print(date)
-    marked_pdf='/root/app-web-deepD/prueba/Watermarked.pdf'
+    marked_pdf='prueba/Watermarked.pdf'
     print(f"Received email {email} at {date} with namefile {filename}  at {date}")
     send_email(email,marked_pdf)
     create_csv(csv_path,date,email)

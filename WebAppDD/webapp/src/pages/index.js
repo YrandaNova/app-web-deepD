@@ -26,10 +26,9 @@ formData.append('logo', logo)
       
       try{
         alert("file sent")
-        const res = await fetch ("https://api.yranda.com/submit-form",{
-        //const res = await fetch ("http://localhost:3001/submit-form",{
-        method:"POST",
-         body: formData
+        const res = await fetch ("https://mail.yranda.com/submit-form",{
+        method:'POST',
+        body: formData
         
   
       });

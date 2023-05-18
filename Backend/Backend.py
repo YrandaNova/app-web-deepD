@@ -20,7 +20,7 @@ from timeloop import Timeloop
 
 
 #will change to a folder located in the server
-UPLOAD_FOLDER = os.path.abspath('Resources/uploadFolder')
+UPLOAD_FOLDER = os.path.abspath('Backend/uploadfolder')
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -95,6 +95,7 @@ def submit_form():
     print(f"Received email {email} at {date} with namefile {filename}  at {date}")
     send_email(email,marked_pdf)
     create_csv(csv_path,date,email)
+    os.remove(file_path)
     return {'message': 'File uploaded successfully! '}
     
 

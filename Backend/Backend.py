@@ -20,7 +20,7 @@ from timeloop import Timeloop
 
 
 #will change to a folder located in the server
-UPLOAD_FOLDER = 'Resources/uploadFolder'
+UPLOAD_FOLDER = os.path.abspath('Resources/uploadFolder')
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

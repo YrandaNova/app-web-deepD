@@ -86,9 +86,9 @@ def submit_form():
     time = datetime.now()
   
     filename=file.filename   
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    file.save(os.path.join('Backend','uploadfolder', filename))
     makeWatermark(logo)
-    file_path=os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file_path=os.path.join('Backend','uploadfolder', filename)
     makepdf(file_path)
     print(date)
     marked_pdf='prueba/Watermarked.pdf'
